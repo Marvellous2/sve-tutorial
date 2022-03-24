@@ -1,11 +1,13 @@
 <script>
+  import { createEventDispatcher } from "svelte";
   import Progress from "./Progress.svelte";
 
   const totalsecond = 20;
-
   let secondsleft = totalsecond;
   let isRunning = false;
   $: progress_bar_width = ((totalsecond - secondsleft) / totalsecond) * 100;
+
+  const dispatch = createEventDispatcher();
 
   function countdown() {
     isRunning = true;
@@ -15,6 +17,7 @@
         clearInterval(timer);
         isRunning = false;
         secondsleft = totalsecond;
+        dispatch("end");
       }
     }, 1000);
   }
